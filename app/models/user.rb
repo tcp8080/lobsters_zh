@@ -355,15 +355,9 @@ class User < ApplicationRecord
     Keystore.value_for("user:#{id}:comments_deleted").to_i
   end
 
-  def fetched_avatar(size = 100)
-    gravatar_url = "https://www.gravatar.com/avatar/" <<
-      Digest::MD5.hexdigest(email.strip.downcase) <<
-      "?r=pg&d=identicon&s=#{size}"
-
+  def fetched_avatar(username)
     begin
-      s = Sponge.new
-      s.timeout = 3
-      res = s.fetch(gravatar_url).body
+      res = RubyIdenticon.create(username, background_color: 0xf0f0f0ff)
       if res.present?
         return res
       end
@@ -373,6 +367,7 @@ class User < ApplicationRecord
 
     nil
   end
+
 
   def refresh_counts!
     Keystore.put("user:#{id}:stories_submitted", stories.count)

@@ -220,6 +220,7 @@ class Story < ApplicationRecord
   end
 
   def check_not_new_domain_from_new_user
+    return if user&.is_admin? # Skip check for admin users tcptcp
     return unless url.present? && new_record? && domain
 
     if user&.is_new? && domain.stories.not_deleted(nil).count == 0

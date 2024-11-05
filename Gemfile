@@ -70,3 +70,5 @@ group :test, :development do
   gem "active_record_doctor"
   gem "database_consistency"
 end
+
+gem 'ruby_identicon'

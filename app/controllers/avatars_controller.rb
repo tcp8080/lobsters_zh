@@ -38,7 +38,7 @@ class AvatarsController < ApplicationController
 
     u = User.where(username: username).first!
 
-    if !(av = u.fetched_avatar(size))
+    if !(av = u.fetched_avatar(username))
       raise ActionController::RoutingError.new("failed fetching avatar")
     end
 
